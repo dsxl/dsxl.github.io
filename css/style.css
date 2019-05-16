@@ -1,4 +1,4 @@
-/* Kelkenny HTML Template*/
+/* Dimitriy Design HTML Template*/
 
 /************ TABLE OF CONTENTS ***************
 1. Fonts
@@ -7,7 +7,7 @@
 
 **********************************************/
 
-/*** 
+/***
 
 ====================================================================
 	Fonts
@@ -30,7 +30,7 @@ font-family: 'Montserrat', sans-serif;*/
 @import url('hover.css');
 @import url('jquery.background-video.css');
 
-/*** 
+/***
 
 ====================================================================
 	Reset
@@ -45,7 +45,7 @@ font-family: 'Montserrat', sans-serif;*/
 	outline:none;
 }
 
-/*** 
+/***
 
 ====================================================================
 	Global Settings
@@ -131,11 +131,11 @@ p {
 ul,li{
 	list-style:none;
 	padding:0px;
-	margin:0px;	
+	margin:0px;
 }
 
 .centered{
-	text-align:center;	
+	text-align:center;
 }
 
 .theme-btn{
@@ -250,26 +250,26 @@ ul,li{
 }
 
 .theme_color{
-	color:#fc6183;	
+	color:#fc6183;
 }
 
-.preloader{ 
-	position:fixed; 
-	left:0px; 
-	top:0px; 
-	width:100%; 
-	height:100%; 
-	z-index:999999; 
-	background-color:#ffffff; 
-	background-position:center center; 
-	background-repeat:no-repeat; 
+.preloader{
+	position:fixed;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:100%;
+	z-index:999999;
+	background-color:#ffffff;
+	background-position:center center;
+	background-repeat:no-repeat;
 	background-image:url(../images/icons/preloader.svg);
 }
 
 img{
 	display:inline-block;
 	max-width:100%;
-	height:auto;	
+	height:auto;
 }
 
 /* page background */
@@ -353,7 +353,7 @@ img{
 }
 
 
-/*** 
+/***
 
 ====================================================================
 	Header
@@ -372,7 +372,7 @@ img{
 	border-bottom-right-radius: 0px;
 	transition: .5s ease;
 	z-index: 99;
-	overflow: hidden; 
+	overflow: hidden;
 }
 
 .header ul {
@@ -464,7 +464,7 @@ img{
     padding-right: 24px;
 }
 
-/*** 
+/***
 
 ====================================================================
 	Card item
@@ -676,10 +676,10 @@ img{
 	margin: 0 10px;
 }
 
-/*** 
+/***
 
 ====================================================================
-	About Us	
+	About Us
 ====================================================================
 
 ***/
@@ -869,17 +869,19 @@ img{
 
 
 .card-about .client-logo ul {
-	margin: 30px 0 20px;
+	margin: 30px 10px 20px;
 }
 
 .card-about .client-logo img {
 	width: auto;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 
 /* Fact counter*/
 .card-about .fact-counter {
-	margin-bottom: 10px;	
+	margin-bottom: 10px;
 }
 
 .fact-counter .inner-box {
@@ -913,7 +915,7 @@ img{
 
 
 
-/*** 
+/***
 
 ====================================================================
 	Resume Section
@@ -972,11 +974,11 @@ img{
 .card-resume .timeline-column .col-header .icon-box .icon-inner{
 	position:relative;
 	width:52px;
-	height:52px;	
+	height:52px;
 }
 
 .dark-layout .card-resume .timeline-column .col-header .icon-box .icon{
-	color:#1e1e1e;	
+	color:#1e1e1e;
 }
 
 
@@ -998,7 +1000,7 @@ img{
 }
 
 .card-resume .timeline-column .timeline-block:last-child{
-	margin-bottom:0px;	
+	margin-bottom:0px;
 }
 
 .card-resume .timeline-column .timeline-block .inner-box{
@@ -1043,7 +1045,7 @@ img{
 	font-size:14px;
 }
 
-/*** 
+/***
 
 ====================================================================
 	Services Section
@@ -1118,7 +1120,7 @@ img{
 }
 
 
-/*** 
+/***
 
 ====================================================================
 	Projects Section
@@ -1279,7 +1281,7 @@ img{
     text-transform: capitalize;
 }
 
-/*** 
+/***
 
 ====================================================================
 	Blog Section
@@ -1499,7 +1501,7 @@ img{
 }
 
 .single-post .comments-area .comment-box:hover{
-	border-color:#222222;	
+	border-color:#222222;
 }
 
 .single-post .comments-area .comment{
@@ -1551,7 +1553,7 @@ img{
 .single-post .comments-area .comment-info{
 	color:#3e5773;
 	line-height:24px;
-	font-size:13px;	
+	font-size:13px;
 }
 
 .single-post .comments-area .comment-box strong{
@@ -1590,7 +1592,7 @@ img{
 
 
 
-/*** 
+/***
 
 ====================================================================
 	Blog Section
@@ -1668,7 +1670,7 @@ img{
 }
 
 
-/*** 
+/***
 
 ====================================================================
 	Contact Section
@@ -2072,11 +2074,3 @@ img{
     width: 100%;
     height: 100%;
 }
-
-
-
-
-
-
-
-
