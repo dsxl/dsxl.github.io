@@ -1,8 +1,8 @@
 <?php
 
 // Define some constants
-define( "RECIPIENT_NAME", "John Doe" );
-define( "RECIPIENT_EMAIL", "youremail@mail.com" );
+define( "RECIPIENT_NAME", "Dimitriy Shames" );
+define( "RECIPIENT_EMAIL", "dimitriyshames@gmail.com" );
 
 
 // Read the form values
@@ -25,7 +25,7 @@ if ( $senderName && $senderEmail && $senderPhone && $message) {
 
 else{
 	//Set Location After Unsuccesssfull Submission
-  	header('Location: index.html?message=Failed');	
+  	header('Location: index.html?message=Failed');
 }
 
 ?>
