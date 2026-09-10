@@ -1,0 +1,84 @@
+---
+import { site } from '../site';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Set on article pages so search engines see the right OG type. */
+  ogType?: 'website' | 'article';
+}
+
+const {
+  title,
+  description = site.description,
+  ogType = 'website',
+} = Astro.props;
+
+const pageTitle = title ? `${title} — ${site.title}` : `${site.title} — ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const path = Astro.url.pathname;
+const isHome = path === '/';
+---
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <script is:inline>
+    /* Runs before first paint so a pinned theme never flashes the other one. */
+    (function () {
+      document.documentElement.classList.remove('no-js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+
+  <meta property="og:type" content={ogType} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content={site.title} />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="alternate" type="application/rss+xml" title={site.title} href="/rss.xml" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-head">
+    <div class="wrap bar">
+      <a class="wordmark" href="/">dimitriy<span>.</span>shames</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/" aria-current={isHome ? 'page' : undefined}>Home</a>
+        <a href="/posts/" aria-current={path.startsWith('/posts') ? 'page' : undefined}>Writing</a>
+        <a href={site.linkedin} rel="me noopener">LinkedIn</a>
+      </nav>
+      <ThemeToggle />
+    </div>
+  </header>
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap bar">
+      <span>&copy; {new Date().getFullYear()} Dimitriy Shames</span>
+      <span>{site.location}</span>
+    </div>
+  </footer>
+</body>
+</html>

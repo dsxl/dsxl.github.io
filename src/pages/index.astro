@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, roles, priorRoles, education, toolbox } from '../site';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', timeZone: 'UTC' });
+---
+<Base>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Dimitriy Shames</h1>
+      <p class="lede">
+        I build and run the business systems that revenue and service teams
+        depend on — Salesforce architecture, platform implementations, and the
+        automation that ties it all together.
+      </p>
+      <ul class="links">
+        <li>
+          <a href={site.linkedin} rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.45-2.2 2.96V21h-4z"/></svg>
+            LinkedIn
+          </a>
+        </li>
+        <li>
+          <a href={site.github} rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+            GitHub
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <p class="eyebrow">About</p>
+      <p>
+        Since 2020 I've worked in the Salesforce ecosystem — starting in
+        administration and moving into implementation and architecture. I've led
+        rollouts of <strong>Marketing Cloud Account Engagement</strong> and{' '}
+        <strong>Field Service</strong>: projects where the platform config is
+        the easy part, and the real work is getting the process, the data model,
+        and the people to agree on the same thing.
+      </p>
+      <p>
+        That scope kept widening, and the job stopped being "admin" a while
+        ago. My team is being retitled from Salesforce Administrators to
+        Business Systems Specialists and Architects — a more honest description
+        of what the work already was.
+      </p>
+      <p>
+        Lately I've been going deeper on the engineering side: writing and
+        shipping real code, wiring systems together with custom integrations and
+        Make, and building with AI-assisted development tooling. Same problems,
+        better tools, far fewer limits on what I can build myself.
+      </p>
+      <p class="muted">
+        Away from work: PC builds with obsessive cable management, games, and a
+        truck that ends up places it probably shouldn't.
+      </p>
+    </div>
+  </section>
+
+  <section id="toolbox">
+    <div class="wrap">
+      <p class="eyebrow">Toolbox</p>
+      <ul class="tags">
+        {toolbox.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <p class="eyebrow">Experience</p>
+      <ul class="roles">
+        {roles.map((r) => (
+          <li class="role">
+            <div class="role-head">
+              <h3>{r.title}</h3>
+              <span class="role-when">{r.when}</span>
+            </div>
+            <p class="role-org">{r.org}</p>
+            <p>{r.summary}</p>
+            {r.points && (
+              <ul>{r.points.map((p) => <li>{p}</li>)}</ul>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <ul class="prior">
+        {priorRoles.map((r) => (
+          <li>
+            <span>{r.title} &middot; <span class="muted">{r.org}</span></span>
+            <span class="role-when">{r.when}</span>
+          </li>
+        ))}
+        {education.map((e) => (
+          <li>
+            <span>{e.title} &middot; <span class="muted">{e.org}</span></span>
+            <span class="role-when">{e.when}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <p class="eyebrow">Projects</p>
+      <div class="empty">
+        <p>
+          Nothing public here yet — the work that matters most right now lives
+          behind a company login. Building in the open is next.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {posts.length > 0 && (
+    <section id="writing">
+      <div class="wrap">
+        <p class="eyebrow">Writing</p>
+        <div class="cards">
+          {posts.map((post) => (
+            <a class="card" href={`/posts/${post.id}/`}>
+              <span class="role-when">{fmt(post.data.date)}</span>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>

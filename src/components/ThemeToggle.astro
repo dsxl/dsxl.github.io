@@ -1,0 +1,73 @@
+---
+/**
+ * Light / System / Dark control.
+ *
+ * Sets data-theme on <html>, which pins color-scheme; every design token
+ * is a light-dark() pair, so the whole palette re-resolves from that one
+ * attribute. "System" removes the attribute and falls back to the OS.
+ */
+---
+<div class="theme-toggle" id="theme-toggle" role="group" aria-label="Color theme">
+  <button type="button" data-mode="light" aria-pressed="false" title="Light" aria-label="Light theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+    </svg>
+  </button>
+  <button type="button" data-mode="system" aria-pressed="false" title="Match system" aria-label="Match system theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="2" y="4" width="20" height="13" rx="2"></rect>
+      <path d="M8 21h8M12 17v4"></path>
+    </svg>
+  </button>
+  <button type="button" data-mode="dark" aria-pressed="false" title="Dark" aria-label="Dark theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+    </svg>
+  </button>
+</div>
+
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var group = document.getElementById('theme-toggle');
+    if (!group) return;
+
+    function read() {
+      try {
+        var v = localStorage.getItem('theme');
+        return v === 'light' || v === 'dark' ? v : 'system';
+      } catch (e) {
+        return 'system';
+      }
+    }
+
+    function apply(mode) {
+      if (mode === 'system') root.removeAttribute('data-theme');
+      else root.setAttribute('data-theme', mode);
+
+      var buttons = group.querySelectorAll('button[data-mode]');
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].setAttribute(
+          'aria-pressed',
+          buttons[i].getAttribute('data-mode') === mode ? 'true' : 'false'
+        );
+      }
+    }
+
+    group.addEventListener('click', function (event) {
+      var button = event.target.closest('button[data-mode]');
+      if (!button) return;
+      var mode = button.getAttribute('data-mode');
+      try {
+        if (mode === 'system') localStorage.removeItem('theme');
+        else localStorage.setItem('theme', mode);
+      } catch (e) {
+        /* private mode or blocked storage — the choice just won't persist */
+      }
+      apply(mode);
+    });
+
+    apply(read());
+  })();
+</script>

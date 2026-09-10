@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('posts');
+  return posts
+    .filter((post) => !post.data.draft)
+    .map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+type Props = { post: CollectionEntry<'posts'> };
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', timeZone: 'UTC' });
+---
+<Base title={post.data.title} description={post.data.description} ogType="article">
+  <article class="article">
+    <div class="wrap">
+      <a class="back" href="/posts/">&larr; Writing</a>
+      <header class="article-head">
+        <h1>{post.data.title}</h1>
+        <p class="role-when">{fmt(post.data.date)}</p>
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Base>
