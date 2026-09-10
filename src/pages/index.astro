@@ -4,6 +4,7 @@ import { site, roles, priorRoles, education, toolbox } from '../site';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('posts'))
+  .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const fmt = (d: Date) =>
