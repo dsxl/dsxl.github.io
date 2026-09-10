@@ -1,5 +1,6 @@
 ---
 import { site } from '../site';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -21,9 +22,21 @@ const path = Astro.url.pathname;
 const isHome = path === '/';
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8" />
+  <script is:inline>
+    /* Runs before first paint so a pinned theme never flashes the other one. */
+    (function () {
+      document.documentElement.classList.remove('no-js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
@@ -53,6 +66,7 @@ const isHome = path === '/';
         <a href="/posts/" aria-current={path.startsWith('/posts') ? 'page' : undefined}>Writing</a>
         <a href={site.linkedin} rel="me noopener">LinkedIn</a>
       </nav>
+      <ThemeToggle />
     </div>
   </header>
 

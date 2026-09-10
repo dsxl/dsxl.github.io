@@ -1,17 +1,25 @@
 /* ---------------------------------------------------------------
-   Design tokens. Dark is the designed default; light is a full,
-   deliberate alternate rather than an inversion.
+   Design tokens.
+
+   Both palettes live in a single declaration per token via CSS
+   light-dark(). `color-scheme: light dark` on :root means the browser
+   follows the OS by default; the theme toggle narrows that to one value
+   by setting data-theme, and every token re-resolves for free. No
+   duplicated palette, no media query.
    --------------------------------------------------------------- */
 :root {
-  --bg:        #0b0d10;
-  --bg-raised: #12151a;
-  --border:    #222831;
-  --border-lo: #191d24;
-  --text:      #e7eaf0;
-  --text-mid:  #aab3c0;
-  --text-lo:   #6f7987;
-  --accent:    #e8a33d;
-  --accent-lo: #3a2c14;
+  color-scheme: light dark;
+
+  /*                light        dark     */
+  --bg:        light-dark(#fbfaf8, #0b0d10);
+  --bg-raised: light-dark(#ffffff, #12151a);
+  --border:    light-dark(#e2ddd4, #222831);
+  --border-lo: light-dark(#efebe4, #191d24);
+  --text:      light-dark(#14181e, #e7eaf0);
+  --text-mid:  light-dark(#4d565f, #aab3c0);
+  --text-lo:   light-dark(#7d868f, #6f7987);
+  --accent:    light-dark(#9a6410, #e8a33d);
+  --accent-lo: light-dark(#f5ead5, #3a2c14);
 
   --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
           "Helvetica Neue", Arial, sans-serif;
@@ -20,24 +28,11 @@
 
   --measure: 68ch;
   --gutter: clamp(1.25rem, 5vw, 2.5rem);
-
-  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg:        #fbfaf8;
-    --bg-raised: #ffffff;
-    --border:    #e2ddd4;
-    --border-lo: #efebe4;
-    --text:      #14181e;
-    --text-mid:  #4d565f;
-    --text-lo:   #7d868f;
-    --accent:    #9a6410;
-    --accent-lo: #f5ead5;
-    color-scheme: light;
-  }
-}
+/* The toggle only ever pins color-scheme; tokens follow automatically. */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -387,3 +382,54 @@ a.card:hover { border-color: var(--accent); transform: translateY(-1px); }
   text-decoration: none;
 }
 .skip:focus { left: 0; }
+
+/* ---------------------------------------------------------------
+   Theme toggle
+   --------------------------------------------------------------- */
+.theme-toggle {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg-raised);
+}
+.theme-toggle button {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  color: var(--text-lo);
+  cursor: pointer;
+  font: inherit;
+  transition: color .15s, background-color .15s;
+}
+.theme-toggle button:hover { color: var(--text); }
+.theme-toggle button[aria-pressed="true"] {
+  background: var(--accent-lo);
+  color: var(--accent);
+}
+.theme-toggle svg { width: 14px; height: 14px; }
+
+/* No toggle without scripting — the OS preference still applies. */
+.no-js .theme-toggle { display: none; }
+
+/* Narrow screens can't fit wordmark + nav + toggle on one line. Rather than
+   let the toggle wrap on its own and look accidental, make it deliberate:
+   wordmark and toggle share the top row, nav takes the full row beneath. */
+@media (max-width: 30rem) {
+  .site-head .bar { row-gap: .4rem; padding-block: .55rem; min-height: 0; }
+  .wordmark     { order: 1; }
+  .theme-toggle { order: 2; }
+  .site-nav     { order: 3; flex-basis: 100%; }
+}
+
+/* Touch pointers need a bigger target than a 14px icon implies. */
+@media (pointer: coarse) {
+  .theme-toggle button { width: 40px; height: 36px; }
+  .theme-toggle svg { width: 16px; height: 16px; }
+}

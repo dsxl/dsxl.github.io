@@ -40,9 +40,8 @@ export type Role = {
 /** Current and recent work, most recent first. */
 export const roles: Role[] = [
   {
-    // TODO: fill in employer + exact title + start year
     title: 'Business Systems Architect',
-    org: 'FILL IN — current employer',
+    org: 'Furnished Quarters',
     when: '2020 — Present',
     summary:
       'Own the business systems that revenue and service teams run on — from ' +
