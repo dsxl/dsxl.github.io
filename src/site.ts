@@ -10,7 +10,7 @@ export const site = {
     'Dimitriy Shames — business systems and Salesforce architecture, ' +
     'platform implementation, and automation for revenue teams.',
   url: 'https://dsxl.github.io',
-  location: 'South Florida', // TODO: confirm — old site said Boca Raton, FL
+  location: 'Florida',
   linkedin: 'https://www.linkedin.com/in/dimitriyshames/',
   github: 'https://github.com/dsxl',
 };
